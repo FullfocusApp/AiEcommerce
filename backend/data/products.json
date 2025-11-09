@@ -1,0 +1,74 @@
+[
+  {
+    "id": "1",
+    "name": "Wireless Headphones",
+    "description": "High-quality wireless headphones with noise cancellation",
+    "price": 99.99,
+    "category": "Electronics",
+    "image": "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400",
+    "stock": 50
+  },
+  {
+    "id": "2",
+    "name": "Smart Watch",
+    "description": "Feature-rich smartwatch with fitness tracking",
+    "price": 199.99,
+    "category": "Electronics",
+    "image": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400",
+    "stock": 30
+  },
+  {
+    "id": "3",
+    "name": "Laptop Backpack",
+    "description": "Durable backpack with laptop compartment",
+    "price": 49.99,
+    "category": "Accessories",
+    "image": "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400",
+    "stock": 100
+  },
+  {
+    "id": "4",
+    "name": "USB-C Cable",
+    "description": "Fast charging USB-C cable (2m)",
+    "price": 14.99,
+    "category": "Accessories",
+    "image": "https://images.unsplash.com/photo-1556656793-08538906a9f8?w=400",
+    "stock": 200
+  },
+  {
+    "id": "5",
+    "name": "Wireless Mouse",
+    "description": "Ergonomic wireless mouse with precision tracking",
+    "price": 29.99,
+    "category": "Electronics",
+    "image": "https://images.unsplash.com/photo-1527814050087-3793815479db?w=400",
+    "stock": 75
+  },
+  {
+    "id": "6",
+    "name": "Mechanical Keyboard",
+    "description": "RGB mechanical keyboard with blue switches",
+    "price": 89.99,
+    "category": "Electronics",
+    "image": "https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=400",
+    "stock": 45
+  },
+  {
+    "id": "7",
+    "name": "Phone Stand",
+    "description": "Adjustable aluminum phone stand",
+    "price": 19.99,
+    "category": "Accessories",
+    "image": "https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?w=400",
+    "stock": 150
+  },
+  {
+    "id": "8",
+    "name": "Portable Charger",
+    "description": "20000mAh portable power bank",
+    "price": 39.99,
+    "category": "Electronics",
+    "image": "https://images.unsplash.com/photo-1609091839311-d5365f9ff1c5?w=400",
+    "stock": 60
+  }
+]
