@@ -1,0 +1,73 @@
+{
+  "name": "AI E-commerce - Social Post Automation",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "social-post",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "position": [250, 300]
+    },
+    {
+      "parameters": {
+        "platform": "={{$json.platform}}",
+        "content": "={{$json.content}}",
+        "scheduledTime": "={{$json.scheduledTime}}"
+      },
+      "name": "Process Post Data",
+      "type": "n8n-nodes-base.set",
+      "position": [450, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{$json.platform}}",
+              "value2": "instagram"
+            }
+          ]
+        }
+      },
+      "name": "Is Instagram?",
+      "type": "n8n-nodes-base.if",
+      "position": [650, 300]
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "text": "={{$json.content}}",
+        "additionalFields": {}
+      },
+      "name": "Post to Instagram",
+      "type": "n8n-nodes-base.instagram",
+      "position": [850, 200]
+    },
+    {
+      "parameters": {
+        "text": "={{$json.content}}"
+      },
+      "name": "Post to TikTok",
+      "type": "n8n-nodes-base.tiktok",
+      "position": [850, 400]
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [[{"node": "Process Post Data", "type": "main", "index": 0}]]
+    },
+    "Process Post Data": {
+      "main": [[{"node": "Is Instagram?", "type": "main", "index": 0}]]
+    },
+    "Is Instagram?": {
+      "main": [
+        [{"node": "Post to Instagram", "type": "main", "index": 0}],
+        [{"node": "Post to TikTok", "type": "main", "index": 0}]
+      ]
+    }
+  }
+}

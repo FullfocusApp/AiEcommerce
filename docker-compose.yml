@@ -1,0 +1,86 @@
+version: '3.8'
+
+services:
+  # MongoDB Database
+  mongodb:
+    image: mongo:7
+    container_name: aiecommerce-mongodb
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: changeme
+
+  # Redis Cache
+  redis:
+    image: redis:7-alpine
+    container_name: aiecommerce-redis
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+
+  # Shopify Integration Service
+  shopify-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: aiecommerce-shopify
+    restart: always
+    ports:
+      - "3001:3001"
+    environment:
+      - NODE_ENV=production
+      - SHOPIFY_SERVICE_PORT=3001
+    env_file:
+      - .env
+    depends_on:
+      - mongodb
+      - redis
+    command: npm run service:shopify
+
+  # AI Content Engine
+  ai-content-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: aiecommerce-ai-content
+    restart: always
+    ports:
+      - "3002:3002"
+    environment:
+      - NODE_ENV=production
+      - AI_CONTENT_PORT=3002
+    env_file:
+      - .env
+    depends_on:
+      - mongodb
+      - redis
+    command: npm run service:ai-content
+
+  # Dynamic Pricing Engine
+  pricing-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: aiecommerce-pricing
+    restart: always
+    ports:
+      - "3003:3003"
+    environment:
+      - NODE_ENV=production
+      - PRICING_ENGINE_PORT=3003
+    env_file:
+      - .env
+    depends_on:
+      - mongodb
+      - redis
+    command: npm run service:pricing
+
+volumes:
+  mongodb_data:
+  redis_data:
