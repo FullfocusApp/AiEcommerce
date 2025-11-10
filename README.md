@@ -286,6 +286,125 @@ Clear your browser's localStorage and refresh:
 - Clear localStorage
 - Refresh the page
 
+## Automation & Shopify Integration
+
+This application now includes powerful automation features for Shopify stores, including dynamic pricing based on inventory levels and comprehensive workflow blueprints for n8n automation platform.
+
+### Shopify Integration Script
+
+The `backend/shopifyIntegration.js` script provides automated dynamic pricing for your Shopify store. It analyzes inventory levels and automatically adjusts prices to optimize sales:
+
+- **Low inventory** (< 10 units): Increases price by up to 10% to capitalize on scarcity
+- **High inventory** (> 100 units): Decreases price by 5% to move stock faster
+- **Normal inventory**: Maintains current pricing
+
+#### Running the Script
+
+```bash
+cd backend
+node shopifyIntegration.js
+```
+
+You can optionally provide a demand factor multiplier:
+
+```bash
+node shopifyIntegration.js 1.2  # Apply 20% demand increase
+```
+
+#### Required Environment Variables
+
+Create a `.env` file in the `backend` directory with the following variables:
+
+```bash
+# Shopify Configuration (Required)
+SHOPIFY_SHOP=your-store.myshopify.com
+SHOPIFY_API_KEY=your_api_key
+SHOPIFY_API_PASSWORD=your_api_password
+
+# Email Notifications (Optional)
+SENDGRID_API_KEY=your_sendgrid_api_key
+SENDGRID_FROM_EMAIL=noreply@yourstore.com
+NOTIFICATION_EMAIL=admin@yourstore.com
+```
+
+#### Features
+
+- **Fetch Products**: Retrieves all products and variants from your Shopify store
+- **Dynamic Pricing**: Calculates optimal prices based on inventory and demand
+- **Automated Updates**: Updates variant prices via Shopify Admin API
+- **Email Notifications**: Sends summary reports via SendGrid (optional)
+- **Rate Limiting**: Respects Shopify API rate limits with automatic delays
+- **Error Handling**: Comprehensive error logging and recovery
+
+#### Script Functions
+
+The script exports the following functions for programmatic use:
+
+```javascript
+const {
+  fetchAllProducts,
+  calculateDynamicPrice,
+  updateVariantPrice,
+  runDynamicPricing,
+  sendEmail,
+  sendPricingUpdateNotification
+} = require('./backend/shopifyIntegration');
+```
+
+### n8n Workflow Blueprints
+
+The `n8n/blueprint.md` file contains detailed workflow descriptions for automating various aspects of your Shopify store. These workflows can be implemented in n8n (a free workflow automation tool).
+
+#### Available Workflows
+
+1. **Abandoned Cart Recovery**: Automatically send recovery emails with discount codes to customers who abandon their carts
+
+2. **New Product Social Promotion**: Auto-post new products to Twitter, Facebook, and Instagram when added to Shopify
+
+3. **Order-to-CRM & Invoice Generation**: Sync orders to HubSpot/Salesforce and generate professional PDF invoices
+
+4. **Inventory Sync Across Channels**: Keep inventory synchronized across Shopify, Amazon, eBay, and other platforms
+
+5. **Customer Segmentation & Loyalty**: Automatically segment customers (VIP, Loyal, At Risk) and send targeted rewards
+
+6. **Automated Fulfillment Updates**: Send tracking updates and request reviews after delivery
+
+#### Implementing n8n Workflows
+
+1. Install n8n (self-hosted or use n8n.cloud)
+2. Create a new workflow in n8n
+3. Follow the node sequences described in `n8n/blueprint.md`
+4. Configure credentials for Shopify, SendGrid, and other services
+5. Set up webhooks in Shopify Admin
+6. Test and activate workflows
+
+For detailed instructions, see [`n8n/blueprint.md`](./n8n/blueprint.md).
+
+### Scheduling Automated Pricing
+
+To run dynamic pricing automatically, set up a cron job:
+
+```bash
+# Run dynamic pricing every day at 3 AM
+0 3 * * * cd /path/to/AiEcommerce/backend && node shopifyIntegration.js >> /var/log/shopify-pricing.log 2>&1
+```
+
+Or use n8n with a Schedule Trigger node to run the script at specified intervals.
+
+### Installation of Automation Dependencies
+
+After cloning the repository, install the required dependencies:
+
+```bash
+cd backend
+npm install
+```
+
+This will install:
+- `axios`: HTTP client for Shopify API requests
+- `@sendgrid/mail`: Email notifications
+- `dotenv`: Environment variable management
+
 ## Future Enhancements
 
 Potential features to add:
